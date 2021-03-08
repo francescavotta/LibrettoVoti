@@ -24,6 +24,9 @@ public class TestLibretto {
 		
 		Libretto libretto25 = libretto.votiUguali(25);
 		System.out.println(libretto25);
+		
+		if(libretto.ricercaCorso("Chimica")!=null)
+			System.out.print(libretto.ricercaCorso("Chimica"));
 	}
 	
 }
