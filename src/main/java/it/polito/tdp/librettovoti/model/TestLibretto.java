@@ -1,5 +1,5 @@
 package it.polito.tdp.librettovoti.model;
-
+//oggettiamente non fa parte del model
 import java.time.LocalDate;
 import java.util.*;
 
