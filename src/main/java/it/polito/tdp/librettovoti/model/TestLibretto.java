@@ -26,7 +26,20 @@ public class TestLibretto {
 		System.out.println(libretto25);
 		
 		if(libretto.ricercaCorso("Chimica")!=null)
-			System.out.print(libretto.ricercaCorso("Chimica"));
+			System.out.println(libretto.ricercaCorso("Chimica"));
+	
+		Voto analisi3 = libretto.ricercaCorso("Analisi3");
+		System.out.println(analisi3);
+		
+		Voto chimica = libretto.ricercaCorso("Chimica");
+		Voto chimica_doppio = new Voto("Chimica", 25, LocalDate.of(2019, 9, 15));
+		Voto chimica_conflitto = new Voto("Chimica", 29, LocalDate.of(2019, 9, 15));
+		System.out.println(chimica + " è in conflitto con " + chimica_conflitto+ "? -->" + libretto.esisteConflitto(chimica_conflitto));
+		System.out.println(chimica + " è doppione di " + chimica_doppio+ "? -->" + libretto.esisteDuplicato(chimica_doppio));
+	
+		libretto.add(chimica_doppio);
+		System.out.println("\nStampo libretto, prova metodo add()");
+		System.out.println(libretto);
 	}
 	
 }

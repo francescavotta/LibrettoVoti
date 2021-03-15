@@ -5,14 +5,18 @@ import java.util.*;
 public class Libretto {
 	//list è un'interfaccia
 	private List <Voto> voti; //definisco una variabile che punta a null
+	private Map<String, Voto> votiMap; //identify map: nome esame --> oggetto Voto
 	
 	public Libretto() {
 		this.voti = new ArrayList<Voto>(); //ora punta all'oggetto, grazie alla parola new
+		this.votiMap = new HashMap<>();
 	}
 	
 	public void add(Voto v) {
-		
-		this.voti.add(v);
+		if(this.esisteConflitto(v)==false && this.esisteDuplicato(v)==false) {
+			this.voti.add(v);
+			this.votiMap.put(v.getNome(), v);
+		}
 	}
 	
 	public String toString() {
@@ -56,6 +60,7 @@ public class Libretto {
 		for(Voto v: this.voti) {
 			if(v.getVoto()==punteggio)
 				risultato.add(v); //uso il metodo add() creato prima
+			// il metodo add() fa più operazioni di un semplice 
 			//risultato.voti.add(v);
 		}
 		return risultato;
@@ -67,14 +72,55 @@ public class Libretto {
 	 * @return
 	 */
 	public Voto ricercaCorso(String nomeCorso) {
-		Voto risultato = null;
+/*		Voto risultato = null;
 		for(Voto v: this.voti) {
 			if(v.getNome().equals(nomeCorso)) {//equal per UGUAGLIANZA, compareTo solo per ORDINARE
 				risultato = v;
 				break;
 			}
 		}
-		return risultato;
+		return risultato;*/
+		
+		return this.votiMap.get(nomeCorso);
+	}
+	/**
+	 * Verifica se c'è già un voto con lo stesso esame e stessa valutazione
+	 * @param v
+	 * @return
+	 */
+	public boolean esisteDuplicato(Voto v) {
+		/*boolean trovato = false;
+		
+		for(Voto voto: this.voti) {
+			if(voto.getNome().equals(v.getNome()) && voto.getVoto()==v.getVoto())
+				trovato = true;
+		}
+		return trovato;*/
+		
+		Voto trovato = this.votiMap.get(v.getNome()); // più efficiente, tempo costante di ricerca in una mappa
+		//nella lista è lineare
+		if(trovato == null)
+			return false;
+		if(trovato.getVoto() == v.getVoto())
+			return true;
+		else
+			return false;
+		
+		
+	}
+	/**
+	 * Verifica se un voto ha lo stesso nome ma valutazione diversa
+	 * @param v
+	 * @return
+	 */
+	public boolean esisteConflitto(Voto v) {
+		boolean trovato = false;
+		
+		for(Voto voto: this.voti) {
+			if(voto.getNome().equals(v.getNome()) && voto.getVoto()!=v.getVoto())
+				trovato = true;
+		}
+		return trovato;
 	}
 
 }
